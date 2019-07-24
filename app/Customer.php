@@ -43,24 +43,7 @@ class Customer
         $result = '';
         foreach ($this->rentals as $each) {
             if ($each instanceof Rental) {
-                $thisAmount = 0;
-                switch ($each->getMovie()->getPriceCode()) {
-                    case Movie::REGULAR:
-                        $thisAmount = 2;
-                        if ($each->getDaysRented() > 2) {
-                            $thisAmount += ($each->getDaysRented() - 2) * 1.5;
-                        }
-                        break;
-                    case Movie::CHILDREN:
-                        $thisAmount = 3;
-                        if ($each->getDaysRented() > 3) {
-                            $thisAmount += ($each->getDaysRented() - 3) * 1.5;
-                        }
-                        break;
-                    case Movie::NEW_RELEASE:
-                        $thisAmount = $each->getDaysRented() * 3;
-                        break;
-                }
+                $thisAmount = $each->getCharge();
             }
             $frequentRentalPoints++;
             if ($each->getMovie()->getPriceCode() == Movie::NEW_RELEASE && $each->getDaysRented() > 1) {
@@ -72,4 +55,5 @@ class Customer
         $result .= sprintf("Anmount owned is %d\nYou earned %d frequent points", $totalAmount, $frequentRentalPoints);
         return $result;
     }
+	
 }
