@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: guochen
- * Date: 24/07/2019
- * Time: 9:41 AM
- */
-
 namespace App;
 
 /**
@@ -39,26 +32,17 @@ class Rental
     {
         return $this->daysRented;
     }
-
-	public function getCharge() {
-		$result = 0;
-		switch ($this->getMovie()->getPriceCode()) {
-			case Movie::REGULAR:
- 				$result = 2;
-            	if ($this->getDaysRented() > 2) {
-                	$result += ($this->getDaysRented() - 2) * 1.5;
-               	}
-             	break;
-            case Movie::CHILDREN:
-            	$result = 3;
-            	if ($this->getDaysRented() > 3) {
-              		$result += ($this->getDaysRented() - 3) * 1.5;
-             	}
-             	break;
-        	case Movie::NEW_RELEASE:
-            	$result = $this->getDaysRented() * 3;
-           		break;
-   		 }
-		return $result;
+	
+	/**
+	 * 获取租赁碟片的费用
+	 */
+    public function getCharge(): int
+	{
+		return $this->getMovie()->getCharge($this->getDaysRented());
+	}
+	
+	public function getFrequentRentalPoints(): int
+	{
+		return $this->getMovie()->getFrequentRentalPoints($this->getDaysRented());
 	}
 }
