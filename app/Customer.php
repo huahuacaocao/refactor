@@ -31,8 +31,6 @@ class Customer
 
     function statement()
     {
-        $totalAmount = 0;
-        $frequentRentalPoints = 0;
         $result = '';
         foreach ($this->rentals as $each) {
             if ($each instanceof Rental) {
@@ -41,8 +39,8 @@ class Customer
             }
         }
 		$result .= sprintf(
-			"Anmount owned is %d\nYou earned %d frequent points", 
-			$this->getTotalAmount(), 
+			"Anmount owned is %d\nYou earned %d frequent points",
+			$this->getTotalAmount(),
 			$this->getTotalFrequentRentalPoints()
 		);
         return $result;
@@ -63,7 +61,7 @@ class Customer
 	}
 
 	/**
-	 * 获取总常客积分 
+	 * 获取总常客积分
 	 */
     private function getTotalFrequentRentalPoints(): int
     {
